@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
+using MyClassLibrary;
 
 namespace LogFolderPerControllerPoc.Controllers
 {
@@ -13,7 +14,7 @@ namespace LogFolderPerControllerPoc.Controllers
 
     [MyAttributeA]
     [MyAttributeB]
-    public class ValuesController : ApiController
+    public class Values2Controller : ApiController
     {
         ILog logger = LogManager.GetLogger( System.Reflection.MethodBase.GetCurrentMethod().DeclaringType );
 
@@ -46,8 +47,8 @@ namespace LogFolderPerControllerPoc.Controllers
             return "value";
         }
 
-        // POST api/values
-        public void Post( [FromBody]string value )
+        [HttpPost]
+        public int Post( int numberA , int numberB )
         {
             var methodName = MethodBase.GetCurrentMethod().Name;
 
@@ -57,6 +58,7 @@ namespace LogFolderPerControllerPoc.Controllers
             logger.Error( $"[{methodName}] - Error" );
             logger.Fatal( $"[{methodName}] - Fatal" );
 
+            return Calculator.Add( numberA , numberB );
         }
 
         // PUT api/values/5
